@@ -24,10 +24,17 @@ type Data = {
   msg: string;
 };
 
+function createDate(unixts: string) {
+  const ms = Number(unixts);
+  const date = new Date(ms).toLocaleString();
+
+  return date;
+}
+
 export function createData(element: Data) {
   return {
     id: element.id,
-    date: element.date,
+    date: createDate(element.date),
     level: translate(element.level),
     src: translate(element.quelle),
     status: element.status,
@@ -37,17 +44,11 @@ export function createData(element: Data) {
     carId: element.id_car,
     protoId: element.id_proto,
     portalId: element.id_portal,
-    msg: element.msg,
-    history: [
+    msg: element.msg.slice(24, 54).concat('...'),
+    details: [
       {
-        date: '2020-01-05',
-        customerId: '11091700',
-        amount: 3,
-      },
-      {
-        date: '2020-01-02',
-        customerId: 'Anonymous',
-        amount: 1,
+        id: element.id,
+        msg: element.msg,
       },
     ],
   };
@@ -95,27 +96,26 @@ function Home({ data }: props) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   let data: Array<object> = [];
-  let levelValues: string[];
-  let sourceValues: string[];
-  let statusValues: number[];
-  let portalValues: number[];
+  let levelValues: string[] = [];
+  let sourceValues: string[] = [];
+  let statusValues: number[] = [];
+  let portalValues: number[] = [];
 
-  axios
+  await axios
     .post('http://localhost:3000/api/data')
     .then((response) => {
       const result = response.data.result.data;
 
       result.forEach((element: Data) => {
-        
         data.push(createData(element));
-        // levelValues.push(translate(element.level));
-        // sourceValues.push(translate(element.quelle));
-        // statusValues.push(element.status);
-        // portalValues.push(element.id_portal);
+        levelValues.push(translate(element.level));
+        sourceValues.push(translate(element.quelle));
+        statusValues.push(element.status);
+        portalValues.push(element.id_portal);
       });
 
       try {
-        const { setSelectValues } = useFilter();
+        const { selectValues, setSelectValues } = useFilter();
         setSelectValues([
           { name: 'source', values: sourceValues },
           { name: 'status', values: statusValues },

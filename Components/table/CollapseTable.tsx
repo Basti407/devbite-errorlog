@@ -9,7 +9,7 @@ import Row from './Row';
 
 type Data = {
   id: number;
-  date: any;
+  date: string;
   level: string;
   src: string;
   status: number;
@@ -20,10 +20,9 @@ type Data = {
   protoId: number;
   portalId: number;
   msg: string;
-  history: {
-    date: string;
-    customerId: string;
-    amount: number;
+  details: {
+    id: number;
+    msg: string;
   }[];
 }[];
 
