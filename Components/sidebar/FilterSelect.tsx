@@ -36,7 +36,6 @@ function getStyles(filter: string, filterData: string[], theme: Theme) {
 
 function preTranslate(value: string | string[] | null) {
   if (typeof value == 'string') {
-  
     return translate(value);
   } else if (value) {
     return value.map((el) => translate(el));
@@ -69,7 +68,7 @@ function translate(value: string) {
 function FilterSelect({ filterObj }: props) {
   const theme = useTheme();
   const [filterData, setFilterData] = React.useState<string[]>([]);
-  const { setFilters } = useFilter();
+  const { filters, setFilters } = useFilter();
 
   const handleChange = (event: SelectChangeEvent<typeof filterData>) => {
     const {

@@ -65,10 +65,20 @@ export function FilterProvider({ children }: props) {
   );
 
   const setFilters = (newFilter: filterValue) => {
-    filter.push(newFilter);
+    filter.map((el) => {
+      if (el.name == newFilter.name) {
+        if (el.value) {
+          el.value.concat(
+            newFilter.value.filter(
+              (a: number) => !el.value.find((b: number) => b === a)
+            )
+          );
+        } else {
+          el.value = newFilter.value;
+        }
+      }
+    });
     setFilter(filter);
-    console.log(newFilter);
-    
   };
 
   const getFilters = () => {
