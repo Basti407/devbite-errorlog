@@ -10,7 +10,6 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import FilterSearch from './FilterSearch';
 import FilterDate from './FilterDate';
-import { useRouter } from 'next/router';
 
 type Anchor = 'right';
 

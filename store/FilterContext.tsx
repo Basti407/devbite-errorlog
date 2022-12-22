@@ -32,6 +32,9 @@ export const defaultFilters = [
   { name: 'limit', isSet: true, value: 100 },
 ];
 
+const searchFilters = ['idCustomer', 'idUser', 'data', 'car', 'protocol'];
+const selectFilters = ['level', 'source', 'status', 'portal'];
+
 const FilterContextDefaultValues: filterContextType = {
   filters: defaultFilters,
   selectValues: [
@@ -67,7 +70,7 @@ export function FilterProvider({ children }: props) {
   const setFilters = (newFilter: filterValue) => {
     filter.map((el) => {
       if (el.name == newFilter.name) {
-        if (el.value) {
+        if (el.value && selectFilters.includes(newFilter.name)) {
           el.value.concat(
             newFilter.value.filter(
               (a: number) => !el.value.find((b: number) => b === a)
