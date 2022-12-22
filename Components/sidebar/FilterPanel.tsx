@@ -12,20 +12,20 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 type Anchor = 'right';
 
-type filterSelectionArray = {
-  name: string;
-  isSet: boolean;
-  value: any;
-}[];
+type props = {
+  filter: {
+    name: string;
+    values: any[];
+  }[];
+};
 
-function Filterpanel() {
+function Filterpanel({ filter }: props) {
   const [state, setState] = React.useState({
     top: false,
     left: false,
     bottom: false,
     right: false,
   });
-  const { getFilters, getSelectValues } = useFilter();
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -41,9 +41,6 @@ function Filterpanel() {
       setState({ ...state, [anchor]: open });
     };
 
-  const filterSelection: filterSelectionArray = getFilters();
-  const filterValues = getSelectValues();
-  
   const list = (anchor: Anchor) => (
     <Box
       sx={{ width: 250 }}
@@ -52,7 +49,7 @@ function Filterpanel() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {filterValues.map((filter) => (
+        {filter.map((filter) => (
           <ListItem key={filter.name} disablePadding>
             <ListItemButton>
               <FilterSelect filterObj={filter} />
@@ -67,7 +64,10 @@ function Filterpanel() {
 
   return (
     <React.Fragment key={anchor}>
-      <IconButton onClick={toggleDrawer(anchor, true)} style={{float: 'right'}}>
+      <IconButton
+        onClick={toggleDrawer(anchor, true)}
+        style={{ float: 'right' }}
+      >
         <MenuIcon />
       </IconButton>
       <Drawer

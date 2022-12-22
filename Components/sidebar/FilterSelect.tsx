@@ -34,6 +34,38 @@ function getStyles(filter: string, filterData: string[], theme: Theme) {
   };
 }
 
+function preTranslate(value: string | string[] | null) {
+  if (typeof value == 'string') {
+  
+    return translate(value);
+  } else if (value) {
+    return value.map((el) => translate(el));
+  }
+}
+
+function translate(value: string) {
+  if (!value) {
+    value = 'unknown';
+  }
+  switch (value) {
+    case 'unknown':
+      return 0;
+    case 'critical error':
+      return 1;
+    case 'error':
+      return 2;
+    case 'warning':
+      return 3;
+    case 'info':
+      return 4;
+    case 'HOMEPAGE-TOOL':
+      return 9;
+    case 'SHOW-ROOM':
+      return 10;
+  }
+  return 0;
+}
+
 function FilterSelect({ filterObj }: props) {
   const theme = useTheme();
   const [filterData, setFilterData] = React.useState<string[]>([]);
@@ -50,7 +82,11 @@ function FilterSelect({ filterObj }: props) {
 
     const filterIsSet = value ? true : false;
     const filterValue = value ? value : null;
-    const filter = { name: EventTarget.name, isSet: filterIsSet, value: filterValue };
+    const filter = {
+      name: filterObj.name,
+      isSet: filterIsSet,
+      value: preTranslate(filterValue),
+    };
     setFilters(filter);
   };
 
@@ -59,12 +95,13 @@ function FilterSelect({ filterObj }: props) {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-name-label">{filterObj.name}</InputLabel>
+        <InputLabel id={filterObj.name + '-label'}>{filterObj.name}</InputLabel>
         <Select
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          multiple
+          labelId={filterObj.name + '-label'}
+          id={filterObj.name}
+          name={filterObj.name}
           value={filterData}
+          multiple
           onChange={handleChange}
           input={<OutlinedInput label="Filter" />}
           MenuProps={MenuProps}

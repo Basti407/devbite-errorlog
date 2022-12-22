@@ -7,6 +7,10 @@ import { useFilter } from '../store/FilterContext';
 
 type props = {
   data: any;
+  selectFilter: {
+    name: string;
+    values: any[];
+  }[];
 };
 
 type Data = {
@@ -44,7 +48,7 @@ export function createData(element: Data) {
     carId: element.id_car,
     protoId: element.id_proto,
     portalId: element.id_portal,
-    msg: element.msg.slice(24, 54).concat('...'),
+    msg: element.msg.slice(24, 100).concat('...'),
     details: [
       {
         id: element.id,
@@ -78,20 +82,20 @@ function translate(value: number) {
   return '';
 }
 
-function Home({ data }: props) {
-  // if (data.length) {
+function Home({ data, selectFilter }: props) {
+  if (data.length) {
+    return (
+      <Fragment>
+        <Filterpanel filter={selectFilter} />
+        <CollapseTable data={data} />
+      </Fragment>
+    );
+  }
   return (
-    <Fragment>
-      <Filterpanel />
-      <CollapseTable data={data} />
-    </Fragment>
+    <div>
+      <p>Loading...</p>
+    </div>
   );
-  // }
-  // return (
-  //   <div>
-  //     <p>Loading...</p>
-  //   </div>
-  // );
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -108,22 +112,25 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
       result.forEach((element: Data) => {
         data.push(createData(element));
-        levelValues.push(translate(element.level));
-        sourceValues.push(translate(element.quelle));
-        statusValues.push(element.status);
-        portalValues.push(element.id_portal);
-      });
 
-      try {
-        const { selectValues, setSelectValues } = useFilter();
-        setSelectValues([
-          { name: 'source', values: sourceValues },
-          { name: 'status', values: statusValues },
-          { name: 'level', values: levelValues },
-          { name: 'portal', values: portalValues },
-        ]);
-      } catch (e) {}
-      return data;
+        const level = translate(element.level);
+        if (levelValues.indexOf(level) === -1) {
+          levelValues.push(level);
+        }
+
+        const src = translate(element.quelle);
+        if (sourceValues.indexOf(src) === -1) {
+          sourceValues.push(src);
+        }
+
+        if (statusValues.indexOf(element.status) === -1) {
+          statusValues.push(element.status);
+        }
+
+        if (portalValues.indexOf(element.id_portal) === -1) {
+          portalValues.push(element.id_portal);
+        }
+      });
     })
     .catch(function (error) {
       console.log('Error', error.message);
@@ -131,6 +138,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       data: data,
+      selectFilter: [
+        { name: 'source', values: sourceValues },
+        { name: 'status', values: statusValues },
+        { name: 'level', values: levelValues },
+        { name: 'portal', values: portalValues },
+      ],
     },
   };
 };

@@ -33,16 +33,26 @@ async function handler(req: NextApiRequest, res: NextApiResponse<resData>) {
       };
     });
 
-    const [idCustomer, idUser, level, source, dateFrom, dateTo, status, portal, protocol, data, car, limit] =
-      passedFilters;
+    const [
+      idCustomer,
+      idUser,
+      level,
+      source,
+      dateFrom,
+      dateTo,
+      status,
+      portal,
+      protocol,
+      data,
+      car,
+      limit,
+    ] = passedFilters;
 
-    const requestString = `https://data.autohaus-digital.de/log/v1/search/${idCustomer.value}/${idUser.value}/-1/-1/-1/${level.value}/${source.value}/${dateFrom.value}/${dateTo.value}/${limit.value}/-1`;
-
-    const requestBody = {};
+    const requestString = `https://data.autohaus-digital.de/log/v1/search/${idCustomer.value}/${idUser.value}/${car.value}/${data.value}/${status.value}/${level.value}/${source.value}/${dateFrom.value}/${dateTo.value}/${limit.value}/${portal.value}`;
+    console.log(requestString);
 
     try {
       const result = await axios.post(requestString);
-
       const data = result.data;
 
       res.status(200).json({

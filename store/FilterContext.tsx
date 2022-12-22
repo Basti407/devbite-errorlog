@@ -67,6 +67,8 @@ export function FilterProvider({ children }: props) {
   const setFilters = (newFilter: filterValue) => {
     filter.push(newFilter);
     setFilter(filter);
+    console.log(newFilter);
+    
   };
 
   const getFilters = () => {
