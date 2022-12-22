@@ -11,6 +11,7 @@ function FilterSearch() {
     { name: 'Data', id: 'data' },
     { name: 'Auto', id: 'car' },
     { name: 'Protokoll', id: 'protocol' },
+    { name: 'Limit', id: 'limit' },
   ];
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

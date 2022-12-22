@@ -21,14 +21,9 @@ type props = {
 };
 
 function Filterpanel({ filter }: props) {
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+  const [state, setState] = React.useState({ right: false });
   const anchor: Anchor = 'right';
-  const applyEvent = new Event('applyEvent')
+  const applyEvent = new Event('applyEvent');
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -45,9 +40,9 @@ function Filterpanel({ filter }: props) {
     };
 
   const handleApply = () => {
-    toggleDrawer(anchor, false)
+    toggleDrawer(anchor, false);
     window.dispatchEvent(applyEvent);
-  }
+  };
 
   const list = (anchor: Anchor) => (
     <Box sx={{ width: 250 }} role="presentation">

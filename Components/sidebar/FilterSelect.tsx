@@ -57,6 +57,8 @@ function translate(value: string) {
       return 3;
     case 'info':
       return 4;
+    case 'other':
+      return 6;
     case 'HOMEPAGE-TOOL':
       return 9;
     case 'SHOW-ROOM':

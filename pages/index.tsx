@@ -74,6 +74,8 @@ function translate(value: number) {
       return 'warning';
     case 4:
       return 'info';
+    case 6:
+      return 'other'
     case 9:
       return 'HOMEPAGE-TOOL';
     case 10:
