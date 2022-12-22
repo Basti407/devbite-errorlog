@@ -76,11 +76,10 @@ export function FilterProvider({ children }: props) {
         } else {
           el.value = newFilter.value;
         }
+        el.isSet = newFilter.isSet;
       }
     });
     setFilter(filter);
-    
-    console.log(filter);
   };
 
   const getFilters = () => {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { defaultFilters, useFilter } from '../../store/FilterContext';
+import { defaultFilters } from '../../store/FilterContext';
 
 type resData =
   | {
@@ -14,16 +14,13 @@ type resData =
 
 async function handler(req: NextApiRequest, res: NextApiResponse<resData>) {
   if (req.method === 'POST') {
-    let reqFilter;
-    try {
-      const { getFilters } = useFilter();
-      reqFilter = getFilters();
-    } catch (e) {
-      reqFilter = defaultFilters;
-    }
+    const reqFilter: typeof defaultFilters = req.body.filters
+      ? req.body.filters
+      : defaultFilters;
 
     const passedFilters = reqFilter.map((filter) => {
       if (!filter.isSet || filter.value === null) {
+      
         filter.value = -1;
       }
 

@@ -14,8 +14,6 @@ function FilterSearch() {
   ];
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event);
-
     const filterIsSet = event.target.value ? true : false;
     const filter = {
       name: event.target.id,

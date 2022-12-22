@@ -6,11 +6,11 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import FilterSelect from './FilterSelect';
-import { useFilter } from '../../store/FilterContext';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import FilterSearch from './FilterSearch';
 import FilterDate from './FilterDate';
+import { useRouter } from 'next/router';
 
 type Anchor = 'right';
 
@@ -28,6 +28,8 @@ function Filterpanel({ filter }: props) {
     bottom: false,
     right: false,
   });
+  const anchor: Anchor = 'right';
+  const applyEvent = new Event('applyEvent')
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -42,6 +44,11 @@ function Filterpanel({ filter }: props) {
 
       setState({ ...state, [anchor]: open });
     };
+
+  const handleApply = () => {
+    toggleDrawer(anchor, false)
+    window.dispatchEvent(applyEvent);
+  }
 
   const list = (anchor: Anchor) => (
     <Box sx={{ width: 250 }} role="presentation">
@@ -59,8 +66,6 @@ function Filterpanel({ filter }: props) {
     </Box>
   );
 
-  const anchor: Anchor = 'right';
-
   return (
     <React.Fragment key={anchor}>
       <IconButton
@@ -75,6 +80,13 @@ function Filterpanel({ filter }: props) {
         onClose={toggleDrawer(anchor, false)}
       >
         {list(anchor)}
+        <Button
+          variant="contained"
+          sx={{ position: 'absolute', bottom: 0, m: 2, width: '90%' }}
+          onClick={handleApply}
+        >
+          Apply Filter!
+        </Button>
       </Drawer>
     </React.Fragment>
   );

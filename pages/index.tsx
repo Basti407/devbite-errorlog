@@ -2,11 +2,11 @@ import CollapseTable from '../Components/table/CollapseTable';
 import Filterpanel from '../Components/sidebar/FilterPanel';
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useFilter } from '../store/FilterContext';
 
 type props = {
-  data: any;
+  fetchedData: any;
   selectFilter: {
     name: string;
     values: any[];
@@ -82,19 +82,31 @@ function translate(value: number) {
   return '';
 }
 
-function Home({ data, selectFilter }: props) {
-  if (data.length) {
-    return (
-      <Fragment>
-        <Filterpanel filter={selectFilter} />
-        <CollapseTable data={data} />
-      </Fragment>
-    );
-  }
+function Home({ fetchedData, selectFilter }: props) {
+  const [data, setData] = useState(fetchedData);
+  const { filters } = useFilter();
+
+  useEffect(() => {
+    window.addEventListener('applyEvent', async (e) => {
+      const response = await axios.post('http://localhost:3000/api/data', {
+        filters: filters,
+      });
+
+      const newData = response.data.result.data;
+      let preparedData: Array<object> = [];
+      newData.forEach((element: Data) => {
+        preparedData.push(createData(element));
+      });
+      setData(preparedData);
+    });
+  });
+  console.log(data);
+
   return (
-    <div>
-      <p>Loading...</p>
-    </div>
+    <Fragment>
+      <Filterpanel filter={selectFilter} />
+      <CollapseTable data={data} />
+    </Fragment>
   );
 }
 
@@ -137,7 +149,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     });
   return {
     props: {
-      data: data,
+      fetchedData: data,
       selectFilter: [
         { name: 'source', values: sourceValues },
         { name: 'status', values: statusValues },
