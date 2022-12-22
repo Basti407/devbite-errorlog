@@ -79,6 +79,8 @@ export function FilterProvider({ children }: props) {
       }
     });
     setFilter(filter);
+    
+    console.log(filter);
   };
 
   const getFilters = () => {

@@ -9,6 +9,8 @@ import FilterSelect from './FilterSelect';
 import { useFilter } from '../../store/FilterContext';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import FilterSearch from './FilterSearch';
+import FilterDate from './FilterDate';
 
 type Anchor = 'right';
 
@@ -42,13 +44,9 @@ function Filterpanel({ filter }: props) {
     };
 
   const list = (anchor: Anchor) => (
-    <Box
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
+    <Box sx={{ width: 250 }} role="presentation">
       <List>
+        <FilterDate />
         {filter.map((filter) => (
           <ListItem key={filter.name} disablePadding>
             <ListItemButton>
@@ -56,6 +54,7 @@ function Filterpanel({ filter }: props) {
             </ListItemButton>
           </ListItem>
         ))}
+        <FilterSearch />
       </List>
     </Box>
   );

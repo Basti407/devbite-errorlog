@@ -68,7 +68,7 @@ function translate(value: string) {
 function FilterSelect({ filterObj }: props) {
   const theme = useTheme();
   const [filterData, setFilterData] = React.useState<string[]>([]);
-  const { filters, setFilters } = useFilter();
+  const { setFilters } = useFilter();
 
   const handleChange = (event: SelectChangeEvent<typeof filterData>) => {
     const {
