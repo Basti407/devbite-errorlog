@@ -95,7 +95,7 @@ function FilterSelect({ filterObj }: props) {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ mr: 1, ml: 1, width: 300 }}>
         <InputLabel id={filterObj.name + '-label'}>{filterObj.name}</InputLabel>
         <Select
           labelId={filterObj.name + '-label'}

@@ -43,13 +43,13 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           <TableCell>{row.msg}</TableCell>
         </TableRow>
         <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="h6" gutterBottom component="div">
                   Details
                 </Typography>
-                <Table size="small" aria-label="purchases">
+                <Table size="small" aria-label="details">
                   <TableHead>
                     <TableRow>
                       <TableCell>Message</TableCell>

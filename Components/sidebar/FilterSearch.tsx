@@ -27,9 +27,10 @@ function FilterSearch() {
   return (
     <>
       {searchFilters.map((filter) => (
-        <ListItem key={filter.id} disablePadding sx={{ m: 1 }}>
+        <ListItem key={filter.id} disablePadding>
           <ListItemButton>
             <TextField
+              sx={{ mr: 1, ml: 1 }}
               fullWidth
               id={filter.id}
               label={filter.name}
