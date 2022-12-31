@@ -6,11 +6,9 @@ import { useFilter } from '../../store/FilterContext';
 function FilterSearch() {
   const { setFilters } = useFilter();
   const searchFilters = [
+    { name: 'Volltextsuche', id: 'search' },
     { name: 'Firma', id: 'idCustomer' },
     { name: 'User', id: 'idUser' },
-    { name: 'Data', id: 'data' },
-    { name: 'Auto', id: 'car' },
-    { name: 'Protokoll', id: 'protocol' },
     { name: 'Limit', id: 'limit' },
   ];
 

@@ -36,6 +36,9 @@ function createDate(unixts: string) {
 }
 
 export function createData(element: Data) {
+  const msg = element.msg ? element.msg : '';
+  const shortMsg = element.msg ? msg.slice(24, 100).concat('...') : '';
+
   return {
     id: element.id,
     date: createDate(element.date),
@@ -48,11 +51,11 @@ export function createData(element: Data) {
     carId: element.id_car,
     protoId: element.id_proto,
     portalId: element.id_portal,
-    msg: element.msg.slice(24, 100).concat('...'),
+    msg: shortMsg,
     details: [
       {
         id: element.id,
-        msg: element.msg,
+        msg: msg,
       },
     ],
   };
@@ -75,7 +78,7 @@ function translate(value: number) {
     case 4:
       return 'info';
     case 6:
-      return 'other'
+      return 'other';
     case 9:
       return 'HOMEPAGE-TOOL';
     case 10:
@@ -102,7 +105,6 @@ function Home({ fetchedData, selectFilter }: props) {
       setData(preparedData);
     });
   });
-  console.log(data);
 
   return (
     <Fragment>
@@ -123,7 +125,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     .post('http://localhost:3000/api/data')
     .then((response) => {
       const result = response.data.result.data;
-
+      // console.log(result);
       result.forEach((element: Data) => {
         data.push(createData(element));
 

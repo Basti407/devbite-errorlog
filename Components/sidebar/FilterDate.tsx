@@ -39,14 +39,14 @@ function FilterDate() {
       <Stack spacing={3} sx={{ mr: 3, ml: 3, mt: 3 }}>
         <DesktopDatePicker
           label="Date From"
-          inputFormat="MM/DD/YYYY"
+          inputFormat="DD.MM.YYYY"
           value={valueFrom}
           onChange={handleChangeFrom}
           renderInput={(params) => <TextField {...params} />}
         />
         <DesktopDatePicker
           label="Date To"
-          inputFormat="MM/DD/YYYY"
+          inputFormat="DD.MM.YYYY"
           value={valueTo}
           onChange={handleChangeTo}
           renderInput={(params) => <TextField {...params} />}

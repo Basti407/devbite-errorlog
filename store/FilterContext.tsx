@@ -24,11 +24,6 @@ export const defaultFilters = [
   { name: 'source', isSet: false, value: null },
   { name: 'dateFrom', isSet: false, value: null },
   { name: 'dateTo', isSet: false, value: null },
-  { name: 'status', isSet: false, value: null },
-  { name: 'portal', isSet: false, value: null },
-  { name: 'protocol', isSet: false, value: null },
-  { name: 'data', isSet: false, value: null },
-  { name: 'car', isSet: false, value: null },
   { name: 'limit', isSet: true, value: 100 },
 ];
 
